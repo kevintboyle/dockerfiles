@@ -1,0 +1,27 @@
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/servicemix"]
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "curl" ]
+
+RUN cd /usr/local/servicemix && curl -f -L -o apache-servicemix-7.0.1.zip http://apache.claz.org/servicemix/servicemix-7/7.0.1/apache-servicemix-7.0.1.zip
+
+RUN cd /usr/local/servicemix && unzip apache-servicemix-7.0.1.zip
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+#Prepare start script and run
+
+
+RUN echo "#!/bin/bash"> /tmp/start_servicemix.sh
+RUN echo "cd /usr/local/servicemix/apache-servicemix-7.0.1/bin" >> /tmp/start_servicemix.sh
+RUN echo "./servicemix" >> /tmp/start_apache_spark.sh
+RUN chmod a+x /tmp/start_apache_spark.sh
+
+
+ENTRYPOINT ["/tmp/start_servicemix.sh"]
+

@@ -1,0 +1,33 @@
+
+
+
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/mysql"]
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "curl" ]
+
+RUN cd /usr/local/syncope && curl -f -L -o http://apache.claz.org/syncope/2.0.7/syncope-standalone-2.0.7-distribution.zip
+
+RUN cd /usr/local/syncope && gunzip syncope-standalone-2.0.7-distribution.zip
+
+RUN cd /usr/local/syncope && tar -xvf zookeeper-3.4.10.tar
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+#Prepare start script and run
+
+
+RUN echo "#!/bin/bash"> /tmp/syncope_start.sh
+RUN echo "cd /usr/local/syncope/" >> /tmp/syncope_start.sh
+RUN echo "chmod 755 ./bin/*.sh" >> /tmp/syncope_start.sh
+RUN echo "./bin/startup.sh" >> /tmp/syncope_start.sh
+RUN chmod a+x /tmp/syncope_start.sh
+
+
+ENTRYPOINT ["/tmp/syncope_start.sh"]
+

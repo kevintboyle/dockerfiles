@@ -1,0 +1,29 @@
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/zookeeper"]
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "curl" ]
+
+RUN cd /usr/local/zookeeper && curl -f -L -o http://apache.claz.org/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+
+RUN cd /usr/local/zookeeper && gunzip zookeeper-3.4.10.tar.gz
+
+RUN cd /usr/local/zookeeper && tar -xvf zookeeper-3.4.10.tar
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+#Prepare start script and run
+
+
+RUN echo "#!/bin/bash"> /tmp/zookeeper_start.sh
+RUN echo "cd /usr/local/zookeeper/zookeeper-3.4.10/bin" >> /tmp/zookeeper_start.sh
+RUN echo "./zkServer.sh start" >> /tmp/zookeeper_start.sh
+RUN chmod a+x /tmp/zookeeper_start.sh
+
+
+ENTRYPOINT ["/tmp/zookeeper_start.sh"]
+

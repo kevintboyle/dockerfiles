@@ -1,0 +1,33 @@
+
+
+
+
+
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/kylin"]
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "wget" ]
+
+RUN cd /usr/local/kylin && wget  http://apache.claz.org/kylin/apache-kylin-2.2.0/apache-kylin-2.2.0-bin-hbase1x.tar.gz
+
+RUN cd /usr/local/kylin && gunzip apache-kylin-2.2.0-bin-hbase1x.tar.gz
+
+RUN cd /usr/local/kylin && tar -xvf apache-kylin-2.2.0-bin-hbase1x.tar
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+#Prepare start script and run
+
+RUN echo "#!/bin/bash"> /tmp/kylin_start.sh
+RUN echo "cd /usr/local/apache_spark/spark-2.2.1-bin-hadoop2.7/sbin" >> /tmp/kylin_start.sh
+
+RUN chmod a+x /tmp/kylin_start.sh
+
+
+ENTRYPOINT ["/tmp/kylin_start.sh"]
+

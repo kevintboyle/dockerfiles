@@ -1,0 +1,23 @@
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/archiva"]
+
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "wget" ]
+
+RUN cd /usr/local/archiva && wget http://mirror.stjschools.org/public/apache/archiva/2.2.3/binaries/apache-archiva-2.2.3-bin.tar.gz
+
+RUN cd /usr/local/archiva && gunzip apache-archiva-2.2.3-bin.tar.gz
+
+RUN cd /usr/local/archiva && tar -xvf apache-archiva-2.2.3-bin.tar
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+ENV ARCHIVA_BASE /archiva-data
+
+
+#ENTRYPOINT ["/usr/local/archiva/apache-archiva-2.2.3/bin/archiva", "console" ]

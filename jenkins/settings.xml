@@ -1,0 +1,44 @@
+<settings>
+    <profiles>
+        <profile>
+            <id>Repository Proxy</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>GameOfLife</id>
+                    <name>GameOfLife</name>
+                    <url>http://archiva:8080/repository/GameOfLife/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>GameOfLife</id>
+                    <name>GameOfLife</name>
+                    <url>http://archiva:8080/repository/GameOfLife/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <servers>
+        <server>
+            <id>GameOfLife</id>
+            <username>kevintboyle</username>
+            <password>potsdam88</password>
+        </server>
+    </servers>
+</settings>
+

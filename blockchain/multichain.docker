@@ -1,0 +1,26 @@
+FROM ubuntu
+
+RUN ["mkdir", "/usr/local/multichain"]
+
+RUN ["apt-get", "update"]
+
+RUN ["apt-get", "--yes", "install", "vim" ]
+
+RUN ["apt-get", "--yes", "install", "wget" ]
+
+RUN cd /usr/local/multichain && wget https://www.multichain.com/download/multichain-1.0.3.tar.gz
+
+RUN cd /usr/local/multichain && gunzip multichain-1.0.3.tar.gz
+
+RUN ["apt-get", "--yes", "install", "default-jre"]
+
+#Prepare start script and run
+
+RUN echo "#!/bin/bash"> /tmp/multichain_start.sh
+RUN echo "cd /usr/local/multichain/multichain-1.0.3" >> /tmp/multichain_start.sh
+
+RUN chmod a+x /tmp/multichain_start.sh
+
+
+ENTRYPOINT ["/tmp/multichain_start.sh"]
+
