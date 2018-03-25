@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN ["mkdir", "/usr/local/quickfix"]
+RUN ["mkdir", "/usr/local/cassandra"]
 
 RUN ["apt-get", "update"]
 
@@ -8,19 +8,17 @@ RUN ["apt-get", "--yes", "install", "vim" ]
 
 RUN ["apt-get", "--yes", "install", "wget" ]
 
-RUN cd /usr/local/quickfix && wget https://sourceforge.net/projects/quickfixj/files/QFJ_RELEASE_2_0_0/2.0.0.zip/download
-
-RUN cd /usr/local/quickfix && gunzip QFJ_RELEASE_2_0_0/2.0.0.zip
+RUN ["apt-get", "--yes", "install", "cassandra" ]
 
 RUN ["apt-get", "--yes", "install", "default-jre"]
 
 #Prepare start script and run
 
 RUN echo "#!/bin/bash"> /tmp/kylin_start.sh
-RUN echo "cd /usr/local/apache_spark/spark-2.2.1-bin-hadoop2.7/sbin" >> /tmp/kylin_start.sh
+RUN echo "service cassandra start" >> /tmp/start_cassandra.sh
 
-RUN chmod a+x /tmp/kylin_start.sh
+RUN chmod a+x /tmp/start_cassandra.sh
 
 
-ENTRYPOINT ["/tmp/kylin_start.sh"]
+ENTRYPOINT ["/tmp/start_cassandra.sh"]
 
